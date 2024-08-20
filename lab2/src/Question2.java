@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 /**
  *
@@ -11,38 +7,55 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Question2 {
-    public static void main (String[]args){
-        JButton[] buttons;
 
-        JFrame j = new JFrame("Calculator");
-        j.setLayout(null); 
-       
-        JPanel p = new JPanel();
-        p.setBounds(0, 0, 550, 80);
-        JTextArea area = new JTextArea();
-        area.setBounds(0, 0, 550, 100);
-        j.add(area);
+    public static void main(String[] args) {
+        JFrame jf = new JFrame("Menu Example ");
+        jf.setSize(500, 500);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setLayout(null);
+        JMenuBar m = new JMenuBar();
+        m.setBounds(0, 0, 500, 20);
+        JMenu m1 = new JMenu("file");
+        JMenu m2 = new JMenu("tools");
 
-        JPanel jp1 = new JPanel();
-        jp1.setBounds(0, 100, 550, 420);
-        String[] button = {"7", "8", "9", "C", "4", "5", "6", "+", "3", "2", "1", "*", "0", "%", "/","="};
-         buttons = new JButton[button.length];
-        for (int i = 0; i < button.length; i++) {
-            buttons[i] = new JButton(button[i]);
-            jp1.add(buttons[i]);
-        }
-        
-        jp1.setLayout(new GridLayout(4, 4));
-        j.add(jp1);
+        JMenuItem jm1 = new JMenuItem("open");
+        JMenuItem jm2 = new JMenuItem("save");
+        JMenuItem jm3 = new JMenuItem("exit");
+        JMenu jm4 = new JMenu("load");
+        JMenuItem jm11 = new JMenuItem("load from site");
+        JMenuItem jm12 = new JMenuItem("load from device");
 
-        j.setSize(550, 550);
-        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        j.setVisible(true);
+        m1.add(jm1);
+        m1.add(jm2);
+        m1.add(jm3);
+        m1.add(jm4);
+        jm4.add(jm11);
+        jm4.add(jm12);
+
+        m.add(m1);
+        m.add(m2);
+        jf.add(m);
+
+        jf.setResizable(false);
+        jf.setVisible(true);
+
+        /*
+         jm1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(jf, "You clicked 'Open'");
+            }
+        });
         
-        
+         */
+        // next way of handiling simple actions using lamda expression
+        jm1.addActionListener(e -> JOptionPane.showMessageDialog(jf, "You clicked 'Open'"));
+        jm2.addActionListener(e -> JOptionPane.showMessageDialog(jf, "You clicked 'Save'"));
+        jm3.addActionListener(e -> {
+            JOptionPane.showMessageDialog(jf, "You clicked 'Exit'");
+            System.exit(0);
+        });
+        jm11.addActionListener(e -> JOptionPane.showMessageDialog(jf, "You clicked 'Load from Site'"));
+        jm12.addActionListener(e -> JOptionPane.showMessageDialog(jf, "You clicked 'Load from Device'"));
+
     }
-
 }
-
-    
-
