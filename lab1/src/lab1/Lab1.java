@@ -5,13 +5,13 @@ package lab1;
  *
  * @author Milan
  */
+ import javax.swing.*;
+import java.awt.*;
 public class Lab1 {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-    }
+   public static void main(String[] args) {
     
 }
+}
+    
+    
+
