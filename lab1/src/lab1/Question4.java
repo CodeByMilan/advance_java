@@ -1,6 +1,9 @@
 package lab1;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -8,12 +11,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 /**
  *
- * @author Milan 4. WAP in Java to add following components on the frame: a.
+ * @author Milan 
+ * 4. WAP in Java to add following components on the frame: a.
  * JLabel displaying “First Swing Application” b. JCheckBox – to select subjects
  * you like c. JRadio Button- to select your favorite Subject d. JComboBox to
  * select your interest e. JButton to submit data
@@ -24,6 +29,12 @@ import javax.swing.JRadioButton;
 public class Question4 {
 
     public static void main(String[] args) {
+        JCheckBox c1,c2,c3;
+        JRadioButton r1,r2,r3;
+        JComboBox jc ;
+        JButton b;
+        
+        
         JFrame f = new JFrame("Lab1:form ");
         f.setSize(500, 500);
         f.setLayout(null);
@@ -38,15 +49,15 @@ public class Question4 {
         l1.setBounds(10, 20, 100, 20);
         p1.add(l1);
 
-        JCheckBox c1 = new JCheckBox("Java");
+         c1 = new JCheckBox("Java");
         c1.setBounds(130, 20, 10, 10);
         p1.add(c1);
 
-        JCheckBox c2 = new JCheckBox("DSA");
+         c2 = new JCheckBox("DSA");
         c2.setBounds(145, 20, 10, 10);
         p1.add(c2);
 
-        JCheckBox c3 = new JCheckBox("Web Tech");
+        c3 = new JCheckBox("Web Tech");
         c3.setBounds(160, 20, 10, 10);
         p1.add(c3);
 
@@ -58,15 +69,15 @@ public class Question4 {
         l2.setBounds(10, 100, 100, 20);
         p2.add(l2);
 
-        JRadioButton r1 = new JRadioButton("java");
+         r1 = new JRadioButton("java");
         r1.setBounds(130, 100, 10, 10);
         p2.add(r1);
 
-        JRadioButton r2 = new JRadioButton("DSA");
+         r2 = new JRadioButton("DSA");
         r2.setBounds(145, 100, 10, 10);
         p2.add(r2);
 
-        JRadioButton r3 = new JRadioButton("Web Tech");
+        r3= new JRadioButton("Web Tech");
         r3.setBounds(160, 100, 10, 10);
         p2.add(r3);
 
@@ -81,14 +92,22 @@ public class Question4 {
         f.add(l3);
         String[] interest= {"Reading" , "Coding" , "Playing" , "Dancing"};
         
-        JComboBox jc = new JComboBox(interest);
+        jc = new JComboBox(interest);
         jc.setBounds(190, 110, 100, 50);
         f.add(jc);
-        JButton b = new JButton("Submit");
+         b = new JButton("Submit");
         b.setBounds(240, 200, 50, 20);
         f.add(b);
 
         f.setVisible(true);
+        
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                JOptionPane.showMessageDialog(null, "Details you have choosen:", "Submited Details" , JOptionPane.PLAIN_MESSAGE);
+            }
+        });
 
     }
 
