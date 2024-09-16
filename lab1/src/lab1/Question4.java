@@ -103,6 +103,7 @@ public class Question4 extends JFrame implements ActionListener {
 
         jc = new JComboBox(interest);
         jc.setBounds(190, 110, 100, 50);
+        jc.addActionListener(this);
         f.add(jc);
 
         //button

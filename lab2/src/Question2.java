@@ -34,7 +34,9 @@ public class Question2 {
 
         m.add(m1);
         m.add(m2);
-        jf.add(m);
+        //jf.add(m);
+        //we can do any one method to add menu in the frame
+        jf.setJMenuBar(m);
 
         jf.setResizable(false);
         jf.setVisible(true);

@@ -66,7 +66,7 @@ public class Lab3 {
             do {
                 System.out.print("Enter RollNo: ");
                 int rollNo = sc.nextInt();
-                sc.nextLine(); // Consume newline
+                sc.nextLine(); 
 
                 System.out.print("Enter Firstname: ");
                 String firstname = sc.nextLine();
