@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +15,7 @@ public class Question4 extends JFrame implements ActionListener {
     JTable table;
     DefaultTableModel model;
     Connection conn;
+    int selectedUserId = -1; 
 
     public Question4() {
         JFrame f = new JFrame("Form Sample");
@@ -25,7 +25,7 @@ public class Question4 extends JFrame implements ActionListener {
 
         // Database Connection
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bca", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BCA2077", "root", "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,18 +96,22 @@ public class Question4 extends JFrame implements ActionListener {
 
         submit = new JButton("Submit");
         submit.setBounds(150, 420, 80, 20);
+        submit.addActionListener(this);
         f.add(submit);
 
         update = new JButton("Update");
         update.setBounds(400, 420, 80, 20);
+        update.addActionListener(this);
         f.add(update);
 
         select_for_update = new JButton("Select For Update");
         select_for_update.setBounds(600, 420, 120, 20);
+        select_for_update.addActionListener(this);
         f.add(select_for_update);
 
         Delete = new JButton("Delete");
         Delete.setBounds(800, 420, 80, 20);
+        Delete.addActionListener(this);
         f.add(Delete);
 
         // JTable
@@ -129,7 +133,81 @@ public class Question4 extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == submit) {
+        try {
+             String gender = r1.isSelected() ? "Male" : "Female";
+            String iquery = "INSERT INTO users(first_name, last_name, gender, address, email, blood_group) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = conn.prepareStatement(iquery);
+            pst.setString(1, t1.getText());
+            pst.setString(2, t2.getText());
+            pst.setString(3, gender);
+            pst.setString(4, t3.getText());
+            pst.setString(5, t4.getText());
+            pst.setString(6, (String) box.getSelectedItem());
+            pst.executeUpdate();
+            loadTableData();
+            clearForm();
+             } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        } else if (e.getSource() == update) {
+             if (selectedUserId != -1) {
+            try {
+                String gender = r1.isSelected() ? "Male" : "Female";
+                String uquery = "UPDATE users SET first_name = ?, last_name = ?, gender = ?, address = ?, email = ?, blood_group = ? WHERE id = ?";
+                PreparedStatement pst = conn.prepareStatement(uquery);
+                pst.setString(1, t1.getText());
+                pst.setString(2, t2.getText());
+                pst.setString(3, gender);
+                pst.setString(4, t3.getText());
+                pst.setString(5, t4.getText());
+                pst.setString(6, (String) box.getSelectedItem());
+                pst.setInt(7, selectedUserId);
+                pst.executeUpdate();
+                loadTableData();
+                clearForm();
+                selectedUserId = -1;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a user to update");
+        }
+        } else if (e.getSource() == select_for_update) {
+              int row = table.getSelectedRow();
+        if (row >= 0) {
+            selectedUserId = (int) model.getValueAt(row, 0);
+            t1.setText(model.getValueAt(row, 1).toString());
+            t2.setText(model.getValueAt(row, 2).toString());
+            String gender = model.getValueAt(row, 3).toString();
+            if (gender.equals("Male")) {
+                r1.setSelected(true);
+            } else {
+                r2.setSelected(true);
+            }
+            t3.setText(model.getValueAt(row, 4).toString());
+            t4.setText(model.getValueAt(row, 5).toString());
+            box.setSelectedItem(model.getValueAt(row, 6).toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a user from the table");
+        }
+        } else if (e.getSource() == Delete) {
+             int row = table.getSelectedRow();
+        if (row >= 0) {
+            int userId = (int) model.getValueAt(row, 0);
+            try {
+                String dquery = "DELETE FROM users WHERE id = ?";
+                PreparedStatement pst = conn.prepareStatement(dquery);
+                pst.setInt(1, userId);
+                pst.executeUpdate();
+                loadTableData();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a user to delete");
+        }
+        }
     }
 
     private void loadTableData() {
@@ -155,4 +233,12 @@ public class Question4 extends JFrame implements ActionListener {
         }
     }
 
+    private void clearForm() {
+        t1.setText("");
+        t2.setText("");
+        b.clearSelection();
+        t3.setText("");
+        t4.setText("");
+        box.setSelectedIndex(0);
+    }
 }
